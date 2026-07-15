@@ -15,9 +15,10 @@ RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf
 RUN sed -ri -e 's/Listen 80/Listen 8080/' /etc/apache2/ports.conf && \
     sed -ri -e 's/:80>/:8080>/' /etc/apache2/sites-available/000-default.conf
 
-# ✅ AJOUT 2 : logs vers stdout/stderr (résout "Unable to open logs")
-RUN ln -sf /dev/stdout /var/log/apache2/access.log && \
-    ln -sf /dev/stderr /var/log/apache2/error.log
+# Logs vers stdout/stderr via les directives Apache (robuste sous UID arbitraire)
+RUN sed -ri 's!^ErrorLog .*!ErrorLog /proc/self/fd/2!' /etc/apache2/apache2.conf && \
+    sed -ri 's!CustomLog .*!CustomLog /proc/self/fd/1 combined!' /etc/apache2/sites-available/000-default.conf && \
+    sed -ri 's!CustomLog .*!CustomLog /proc/self/fd/1 combined!g' /etc/apache2/conf-available/other-vhosts-access-log.conf
 
 RUN a2enmod rewrite
 
