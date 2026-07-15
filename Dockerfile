@@ -32,5 +32,5 @@ RUN echo "</Directory>" >> /etc/apache2/conf-available/myapp.conf
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 RUN a2enconf myapp
 
-# Exposer le port 80
-EXPOSE 80
+# Exposer le port 8080
+EXPOSE 8080
