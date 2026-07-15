@@ -11,7 +11,7 @@ services:
   db:
     image: mysql:8.0
     environment:
-      MYSQL_ROOT_PASSWORD: root  # Définir le mot de passe root dans mon pdoModel
+      MYSQL_ROOT_PASSWORD: root123  # Définir le mot de passe root dans mon pdoModel
       MYSQL_DATABASE: php_mvc               # Créer une base de données
       MYSQL_USER: user                    # Créer un utilisateur régulier
       MYSQL_PASSWORD: user123            # Définir le mot de passe de l'utilisateur
